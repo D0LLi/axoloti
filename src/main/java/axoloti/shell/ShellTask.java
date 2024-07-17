@@ -5,6 +5,7 @@ import axoloti.job.IJob;
 import axoloti.job.IJobContext;
 import axoloti.preferences.Preferences;
 import axoloti.utils.OSDetect;
+import io.github.pixee.security.SystemCommand;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -134,7 +135,7 @@ public class ShellTask {
         synchronized (excl) {
             Runtime runtime = Runtime.getRuntime();
             try {
-                Process p1 = runtime.exec(cmdarray, environment, new File(workingDirectory));
+                Process p1 = SystemCommand.runCommand(runtime, cmdarray, environment, new File(workingDirectory));
                 StringBuffer sb_out = new StringBuffer();
                 Thread thd_out = new Thread(new StreamHandlerThread(p1.getInputStream(), sb_out));
                 thd_out.start();
