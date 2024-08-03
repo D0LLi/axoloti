@@ -12,6 +12,7 @@ import axoloti.property.ListProperty;
 import axoloti.property.ObjectProperty;
 import axoloti.property.Property;
 import axoloti.shell.ExecutionFailedException;
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -88,7 +89,7 @@ public class PatchBankModel extends AbstractModel<PatchBankController> {
         file = new File(filename);
         BufferedReader fbs = new BufferedReader(new InputStreamReader(inputStream));
         String s;
-        while ((s = fbs.readLine())
+        while ((s = BoundedLineReader.readLine(fbs, 5_000_000))
                 != null) {
             if (s != null) {
                 files.add(s);
