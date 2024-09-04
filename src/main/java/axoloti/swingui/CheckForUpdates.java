@@ -18,6 +18,8 @@
 package axoloti.swingui;
 
 import axoloti.Version;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -48,7 +50,7 @@ public class CheckForUpdates {
             return;
         }
         try {
-            URL url = new URL("http://www.axoloti.com/updates/" + Version.AXOLOTI_SHORT_VERSION + "-2");
+            URL url = Urls.create("http://www.axoloti.com/updates/" + Version.AXOLOTI_SHORT_VERSION + "-2", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(url.openStream()));
             in.close();

@@ -32,6 +32,8 @@ import axoloti.swingui.patchbank.PatchBank;
 import axoloti.swingui.preferences.PreferencesFrame;
 import axoloti.utils.KeyUtils;
 import generatedobjects.GeneratedObjects;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
@@ -252,7 +254,7 @@ public class FileMenu extends JMenu {
             return;
         }
         try {
-            InputStream input = new URL(url).openStream();
+            InputStream input = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openStream();
             String name = url.substring(url.lastIndexOf('/') + 1, url.length());
             PatchViewSwing.openPatch(name, input);
         } catch (MalformedURLException ex) {
