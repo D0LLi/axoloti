@@ -5,6 +5,7 @@ import axoloti.job.IJobContext;
 import axoloti.job.JobContext;
 import axoloti.target.fs.SDFileReference;
 import axoloti.utils.OSDetect;
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -92,7 +93,7 @@ public class CompilePatch {
                 BufferedReader br = new BufferedReader(new FileReader(fdepsfname));
                 String s1;
                 String s = "";
-                while ((s1 = br.readLine()) != null) {
+                while ((s1 = BoundedLineReader.readLine(br, 5_000_000)) != null) {
                     s += s1 + " ";
                 }
                 s = s.trim();

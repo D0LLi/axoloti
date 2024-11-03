@@ -5,6 +5,7 @@ import axoloti.job.IJob;
 import axoloti.job.IJobContext;
 import axoloti.preferences.Preferences;
 import axoloti.utils.OSDetect;
+import io.github.pixee.security.BoundedLineReader;
 import io.github.pixee.security.SystemCommand;
 import java.io.BufferedReader;
 import java.io.File;
@@ -64,7 +65,7 @@ public class ShellTask {
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line;
             try {
-                line = br.readLine();
+                line = BoundedLineReader.readLine(br, 5_000_000);
                 while (line != null) {
                     sb.append(line);
                     sb.append("\n");
@@ -73,7 +74,7 @@ public class ShellTask {
                     } else {
                         Logger.getLogger(ShellTask.class.getName()).log(Level.INFO, "{0}", line);
                     }
-                    line = br.readLine();
+                    line = BoundedLineReader.readLine(br, 5_000_000);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ShellTask.class.getName()).log(Level.SEVERE, null, ex);
