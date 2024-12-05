@@ -49,6 +49,8 @@ import axoloti.swingui.target.TJFrame;
 import axoloti.target.TargetModel;
 import axoloti.target.TargetRTInfo;
 import axoloti.utils.KeyUtils;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -704,7 +706,7 @@ public class MainFrame extends TJFrame implements ActionListener {
             return;
         }
         try {
-            InputStream input = new URL(url).openStream();
+            InputStream input = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openStream();
             String name = url.substring(url.lastIndexOf('/') + 1, url.length());
             PatchViewSwing.openPatch(name, input);
         } catch (MalformedURLException ex) {
